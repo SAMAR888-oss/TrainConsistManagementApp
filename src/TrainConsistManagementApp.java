@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
@@ -14,16 +15,17 @@ public class TrainConsistManagementApp {
         bogieCapacity.put(bogieId, capacity);
     }
 
-    public void displaySortedBogies() {
+    public void filterBogies(int minCapacity) {
 
-        List<Map.Entry<String, Integer>> list = new ArrayList<>(bogieCapacity.entrySet());
+        List<Map.Entry<String, Integer>> filtered =
+                bogieCapacity.entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue() >= minCapacity)
+                        .collect(Collectors.toList());
 
-        // Sort using Comparator (by capacity)
-        list.sort((a, b) -> a.getValue() - b.getValue());
+        System.out.println("Filtered Bogies (Capacity >= " + minCapacity + "):");
 
-        System.out.println("Sorted Bogies by Capacity:");
-
-        for (Map.Entry<String, Integer> entry : list) {
+        for (Map.Entry<String, Integer> entry : filtered) {
             System.out.println(entry.getKey() + " → " + entry.getValue());
         }
     }
@@ -36,6 +38,6 @@ public class TrainConsistManagementApp {
         train.addBogie("B2", 60);
         train.addBogie("B3", 45);
 
-        train.displaySortedBogies();
+        train.filterBogies(50);
     }
 }
