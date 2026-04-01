@@ -3,45 +3,34 @@ import java.util.*;
 public class TrainConsistManagementApp {
 
     String trainName;
-    HashMap<String, String> bogieType;
+    HashMap<String, Integer> bogieCapacity;
 
     public TrainConsistManagementApp(String trainName) {
         this.trainName = trainName;
-        this.bogieType = new HashMap<>();
+        this.bogieCapacity = new HashMap<>();
     }
 
-    public void addBogie(String bogieId, String type) {
-        bogieType.put(bogieId, type);
+    public void addBogie(String bogieId, int capacity) {
+        bogieCapacity.put(bogieId, capacity);
     }
 
-    public void groupBogies() {
+    public void countTotalSeats() {
 
-        HashMap<String, List<String>> grouped = new HashMap<>();
+        int total = bogieCapacity.values()
+                .stream()
+                .reduce(0, Integer::sum);
 
-        for (Map.Entry<String, String> entry : bogieType.entrySet()) {
-
-            String bogie = entry.getKey();
-            String type = entry.getValue();
-
-            grouped.putIfAbsent(type, new ArrayList<>());
-            grouped.get(type).add(bogie);
-        }
-
-        System.out.println("Grouped Bogies:");
-
-        for (String type : grouped.keySet()) {
-            System.out.println(type + " → " + grouped.get(type));
-        }
+        System.out.println("Total Seats: " + total);
     }
 
     public static void main(String[] args) {
 
         TrainConsistManagementApp train = new TrainConsistManagementApp("Express");
 
-        train.addBogie("B1", "AC");
-        train.addBogie("B2", "Sleeper");
-        train.addBogie("B3", "AC");
+        train.addBogie("B1", 50);
+        train.addBogie("B2", 60);
+        train.addBogie("B3", 40);
 
-        train.groupBogies();
+        train.countTotalSeats();
     }
 }
