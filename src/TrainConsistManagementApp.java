@@ -1,32 +1,36 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
     String trainName;
-    HashMap<String, Integer> bogieCapacity;
+    HashMap<String, String> bogieType;
 
     public TrainConsistManagementApp(String trainName) {
         this.trainName = trainName;
-        this.bogieCapacity = new HashMap<>();
+        this.bogieType = new HashMap<>();
     }
 
-    public void addBogie(String bogieId, int capacity) {
-        bogieCapacity.put(bogieId, capacity);
+    public void addBogie(String bogieId, String type) {
+        bogieType.put(bogieId, type);
     }
 
-    public void filterBogies(int minCapacity) {
+    public void groupBogies() {
 
-        List<Map.Entry<String, Integer>> filtered =
-                bogieCapacity.entrySet()
-                        .stream()
-                        .filter(entry -> entry.getValue() >= minCapacity)
-                        .collect(Collectors.toList());
+        HashMap<String, List<String>> grouped = new HashMap<>();
 
-        System.out.println("Filtered Bogies (Capacity >= " + minCapacity + "):");
+        for (Map.Entry<String, String> entry : bogieType.entrySet()) {
 
-        for (Map.Entry<String, Integer> entry : filtered) {
-            System.out.println(entry.getKey() + " → " + entry.getValue());
+            String bogie = entry.getKey();
+            String type = entry.getValue();
+
+            grouped.putIfAbsent(type, new ArrayList<>());
+            grouped.get(type).add(bogie);
+        }
+
+        System.out.println("Grouped Bogies:");
+
+        for (String type : grouped.keySet()) {
+            System.out.println(type + " → " + grouped.get(type));
         }
     }
 
@@ -34,10 +38,10 @@ public class TrainConsistManagementApp {
 
         TrainConsistManagementApp train = new TrainConsistManagementApp("Express");
 
-        train.addBogie("B1", 50);
-        train.addBogie("B2", 60);
-        train.addBogie("B3", 45);
+        train.addBogie("B1", "AC");
+        train.addBogie("B2", "Sleeper");
+        train.addBogie("B3", "AC");
 
-        train.filterBogies(50);
+        train.groupBogies();
     }
 }
