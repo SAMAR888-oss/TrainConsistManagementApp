@@ -2,31 +2,28 @@ import java.util.*;
 
 public class TrainConsistManagementApp {
 
-    HashMap<String, Integer> bogieCapacity = new HashMap<>();
-
-    public void addBogie(String id, int capacity) {
-        bogieCapacity.put(id, capacity);
-    }
-
-    public void checkSafety() {
-
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-
-            if (entry.getValue() > 100) {
-                System.out.println("Unsafe bogie: " + entry.getKey());
-            } else {
-                System.out.println("Safe bogie: " + entry.getKey());
-            }
-        }
-    }
-
     public static void main(String[] args) {
 
-        TrainConsistManagementApp app = new TrainConsistManagementApp();
+        List<Integer> list = new ArrayList<>();
 
-        app.addBogie("B1", 80);
-        app.addBogie("B2", 120);
+        for (int i = 1; i <= 100000; i++) {
+            list.add(i);
+        }
 
-        app.checkSafety();
+        // Loop
+        long start1 = System.nanoTime();
+        int sum1 = 0;
+        for (int num : list) {
+            sum1 += num;
+        }
+        long end1 = System.nanoTime();
+
+        // Stream
+        long start2 = System.nanoTime();
+        int sum2 = list.stream().reduce(0, Integer::sum);
+        long end2 = System.nanoTime();
+
+        System.out.println("Loop time: " + (end1 - start1));
+        System.out.println("Stream time: " + (end2 - start2));
     }
 }
