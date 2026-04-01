@@ -1,13 +1,13 @@
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 public class TrainConsistManagementApp {
 
     String trainName;
-    TreeSet<String> bogies;
+    LinkedHashSet<String> bogies;
 
     public TrainConsistManagementApp(String trainName) {
         this.trainName = trainName;
-        this.bogies = new TreeSet<>();
+        this.bogies = new LinkedHashSet<>();
     }
 
     public void addBogie(String bogieId) {
@@ -16,7 +16,7 @@ public class TrainConsistManagementApp {
 
     public void displayConsistSummary() {
         System.out.println("Train: " + trainName);
-        System.out.println("Sorted Bogies:");
+        System.out.println("Insertion Order Bogies:");
 
         for (String bogie : bogies) {
             System.out.println("Bogie: " + bogie);
