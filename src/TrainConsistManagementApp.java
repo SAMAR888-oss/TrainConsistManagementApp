@@ -1,29 +1,23 @@
-import java.util.*;
-
 public class TrainConsistManagementApp {
+
+    public void addBogie(String id, int capacity) {
+
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("Invalid capacity!");
+        }
+
+        System.out.println("Bogie added: " + id + " Capacity: " + capacity);
+    }
 
     public static void main(String[] args) {
 
-        List<Integer> list = new ArrayList<>();
+        TrainConsistManagementApp app = new TrainConsistManagementApp();
 
-        for (int i = 1; i <= 100000; i++) {
-            list.add(i);
+        try {
+            app.addBogie("B1", 50);
+            app.addBogie("B2", -10); // invalid
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
-
-        // Loop
-        long start1 = System.nanoTime();
-        int sum1 = 0;
-        for (int num : list) {
-            sum1 += num;
-        }
-        long end1 = System.nanoTime();
-
-        // Stream
-        long start2 = System.nanoTime();
-        int sum2 = list.stream().reduce(0, Integer::sum);
-        long end2 = System.nanoTime();
-
-        System.out.println("Loop time: " + (end1 - start1));
-        System.out.println("Stream time: " + (end2 - start2));
     }
 }
