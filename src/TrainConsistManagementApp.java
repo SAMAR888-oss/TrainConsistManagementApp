@@ -1,20 +1,32 @@
-import java.util.regex.*;
+import java.util.*;
 
 public class TrainConsistManagementApp {
 
-    public boolean validateTrainId(String trainId) {
-        return trainId.matches("TR\\d{3}");
+    HashMap<String, Integer> bogieCapacity = new HashMap<>();
+
+    public void addBogie(String id, int capacity) {
+        bogieCapacity.put(id, capacity);
     }
 
-    public boolean validateCargoCode(String code) {
-        return code.matches("CG-[A-Z]{2}\\d{2}");
+    public void checkSafety() {
+
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+
+            if (entry.getValue() > 100) {
+                System.out.println("Unsafe bogie: " + entry.getKey());
+            } else {
+                System.out.println("Safe bogie: " + entry.getKey());
+            }
+        }
     }
 
     public static void main(String[] args) {
 
         TrainConsistManagementApp app = new TrainConsistManagementApp();
 
-        System.out.println("Train ID valid: " + app.validateTrainId("TR123"));
-        System.out.println("Cargo valid: " + app.validateCargoCode("CG-AB12"));
+        app.addBogie("B1", 80);
+        app.addBogie("B2", 120);
+
+        app.checkSafety();
     }
 }
