@@ -1,36 +1,25 @@
-import java.util.HashSet;
+import java.util.TreeSet;
 
 public class TrainConsistManagementApp {
 
     String trainName;
-    HashSet<String> bogies;
+    TreeSet<String> bogies;
 
-    // Constructor
     public TrainConsistManagementApp(String trainName) {
         this.trainName = trainName;
-        this.bogies = new HashSet<>();
+        this.bogies = new TreeSet<>();
     }
 
-    // Add bogie (no duplicates)
     public void addBogie(String bogieId) {
-        if (bogies.add(bogieId)) {
-            System.out.println(bogieId + " added successfully");
-        } else {
-            System.out.println("Duplicate bogie not allowed: " + bogieId);
-        }
+        bogies.add(bogieId);
     }
 
-    // Display summary
     public void displayConsistSummary() {
         System.out.println("Train: " + trainName);
-        System.out.println("Consist Summary:");
+        System.out.println("Sorted Bogies:");
 
-        if (bogies.isEmpty()) {
-            System.out.println("No bogies added yet");
-        } else {
-            for (String bogie : bogies) {
-                System.out.println("Bogie: " + bogie);
-            }
+        for (String bogie : bogies) {
+            System.out.println("Bogie: " + bogie);
         }
     }
 
@@ -38,12 +27,10 @@ public class TrainConsistManagementApp {
 
         TrainConsistManagementApp train = new TrainConsistManagementApp("Express");
 
-        // Add bogies (with duplicate)
+        train.addBogie("B3");
         train.addBogie("B1");
         train.addBogie("B2");
-        train.addBogie("B1"); // duplicate
 
-        // Display
         train.displayConsistSummary();
     }
 }
