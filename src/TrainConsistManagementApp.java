@@ -1,25 +1,28 @@
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 
 public class TrainConsistManagementApp {
 
     String trainName;
-    LinkedHashSet<String> bogies;
+    HashMap<String, Integer> bogieCapacity;
 
+    // Constructor
     public TrainConsistManagementApp(String trainName) {
         this.trainName = trainName;
-        this.bogies = new LinkedHashSet<>();
+        this.bogieCapacity = new HashMap<>();
     }
 
-    public void addBogie(String bogieId) {
-        bogies.add(bogieId);
+    // Add bogie with capacity
+    public void addBogie(String bogieId, int capacity) {
+        bogieCapacity.put(bogieId, capacity);
     }
 
+    // Display summary
     public void displayConsistSummary() {
         System.out.println("Train: " + trainName);
-        System.out.println("Insertion Order Bogies:");
+        System.out.println("Bogie Capacity Details:");
 
-        for (String bogie : bogies) {
-            System.out.println("Bogie: " + bogie);
+        for (String bogie : bogieCapacity.keySet()) {
+            System.out.println("Bogie: " + bogie + " → Capacity: " + bogieCapacity.get(bogie));
         }
     }
 
@@ -27,10 +30,12 @@ public class TrainConsistManagementApp {
 
         TrainConsistManagementApp train = new TrainConsistManagementApp("Express");
 
-        train.addBogie("B3");
-        train.addBogie("B1");
-        train.addBogie("B2");
+        // Add bogies with capacity
+        train.addBogie("B1", 50);
+        train.addBogie("B2", 60);
+        train.addBogie("B3", 45);
 
+        // Display
         train.displayConsistSummary();
     }
 }
